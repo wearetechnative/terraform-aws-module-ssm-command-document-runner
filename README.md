@@ -89,4 +89,32 @@ To use this module ...
 ```
 
 <!-- BEGIN_TF_DOCS -->
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_aws"></a> [aws](#provider\_aws) | n/a |
+
+## Modules
+
+No modules.
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [aws_ssm_association.run_reboot_doc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_association) | resource |
+| [aws_ssm_document.reboot_check](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_document) | resource |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_apply_only_at_cron_interval"></a> [apply\_only\_at\_cron\_interval](#input\_apply\_only\_at\_cron\_interval) | Enable this option if you do not want an association to run immediately after you create or update it. | `bool` | `true` | no |
+| <a name="input_schedule"></a> [schedule](#input\_schedule) | VARIABLES | `string` | `"cron(0 10 ? * * *)"` | no |
+| <a name="input_targets"></a> [targets](#input\_targets) | list of instance ids to be checked | `list(string)` | <pre>[<br>  "*"<br>]</pre> | no |
+
+## Outputs
+
+No outputs.
 <!-- END_TF_DOCS -->

@@ -4,9 +4,9 @@ This example runs a shell script daily to check whether a reboot is required.
 
 ```hcl
 module "run_ssm_document" {
-  source = "TechNative-B-V/ssm-command-run/aws"
-  document_type = "command"
-  schedule = "cron(0 2 * * ? *)"
+  source = "git@github.com:wearetechnative/terraform-aws-module-ssm-command-document-runner.git"
+  schedule = "cron(23 11 * * ? *)"
+  document_name = "modulecheck"
   content = <<DOC
   {
     "schemaVersion": "2.2",
@@ -30,12 +30,7 @@ module "run_ssm_document" {
         }
     ]
   }
-  DOC
-
-  targets = [
-    " * "
-  ]
-  
+  DOC  
   apply_only_at_cron_interval = true
 }
 ```

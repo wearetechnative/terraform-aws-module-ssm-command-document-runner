@@ -1,11 +1,11 @@
-resource "aws_ssm_document" "reboot_check" {
+resource "aws_ssm_document" "ssm_doc" {
   name          = var.document_name
-  document_type = "command"
+  document_type = "Command"
   content = var.content
 }
 
-resource "aws_ssm_association" "run_reboot_doc" {
-  name = aws_ssm_document.reboot_check.name
+resource "aws_ssm_association" "run_ssm_doc" {
+  name = aws_ssm_document.ssm_doc.name
 
   targets {
     key    = "InstanceIds"

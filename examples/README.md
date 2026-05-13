@@ -6,7 +6,7 @@ This example runs a shell script daily to check whether a reboot is required.
 module "run_ssm_document" {
   source = "git@github.com:wearetechnative/terraform-aws-module-ssm-command-document-runner.git"
   schedule = "cron(23 11 * * ? *)"
-  document_name = "modulecheck"
+  document_name = "VerifyRebootRequired"
   content = <<DOC
   {
     "schemaVersion": "2.2",

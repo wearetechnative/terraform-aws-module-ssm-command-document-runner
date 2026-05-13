@@ -7,7 +7,7 @@ variable "schedule" {
 variable "apply_only_at_cron_interval" {
   type = bool
   default = true
-	description = "Enable this option if you do not want an association to run immediately after you create or update it. "
+	description = "Disable this option if you do not want an association to run immediately after you create or update it. "
 }
 
 variable "targets" {

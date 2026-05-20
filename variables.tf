@@ -26,3 +26,9 @@ variable "document_name" {
   type        = string
   description = "The name you want to give to your ssm document and please make sure that it is descriptive as it will be used in the alerts"
 }
+
+variable "create_event_bridge_rule" {
+  type = bool
+  default = false
+  description = "Create a eventbridge rule specific for this doc runner, for when the normal ssm rule is disabled"
+}

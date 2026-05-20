@@ -23,12 +23,13 @@ resource "aws_ssm_association" "run_ssm_doc" {
 ## TODO: figure out solution for ths
 
 resource "aws_cloudwatch_event_rule" "run_ssm_doc" {
+  count = var.create_event_bridge_rule == true ? 1 : 0
   name        = "ssm document runner notification rule"
   description = "Capture each AWS Console Sign In"
 
   event_pattern = {
     "source" : ["aws.ssm"],
-    "detail-type" : ["EC2 State Manager Instance Association State Change"],
+    "detail-type" : ["EC2 Command Invocation Status-change Notification"],
     "detail" : {
       "status" : ["Failed"],
       "document-name" : [aws_ssm_document.ssm_doc.name]
@@ -37,6 +38,7 @@ resource "aws_cloudwatch_event_rule" "run_ssm_doc" {
 }
 
 resource "aws_cloudwatch_event_target" "sns" {
+  count = var.create_event_bridge_rule == true ? 1 : 0
   rule      = aws_cloudwatch_event_rule.run_ssm_doc.name
   target_id = "SendToObservability"
   arn       = "arn:aws:sns:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:observability-sns-topic"

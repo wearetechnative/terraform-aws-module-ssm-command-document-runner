@@ -23,23 +23,23 @@ resource "aws_ssm_association" "run_ssm_doc" {
 ## TODO: figure out solution for ths
 
 resource "aws_cloudwatch_event_rule" "run_ssm_doc" {
-  count = var.create_event_bridge_rule == true ? 1 : 0
-  name        = "ssm document runner notification rule"
+  count       = var.create_event_bridge_rule == true ? 1 : 0
+  name        = "ssm-document-runner-notification-rule"
   description = "Capture failed association document runs"
 
-  event_pattern = {
+  event_pattern = jsonencode({
     "source" : ["aws.ssm"],
     "detail-type" : ["EC2 Command Invocation Status-change Notification"],
     "detail" : {
       "status" : ["Failed"],
       "document-name" : [aws_ssm_document.ssm_doc.name]
     }
-  }
+  })
 }
 
 resource "aws_cloudwatch_event_target" "sns" {
-  count = var.create_event_bridge_rule == true ? 1 : 0
-  rule      = aws_cloudwatch_event_rule.run_ssm_doc.name
+  count     = var.create_event_bridge_rule == true ? 1 : 0
+  rule      = aws_cloudwatch_event_rule.run_ssm_doc[0].name
   target_id = "SendToObservability"
-  arn       = "arn:aws:sns:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:observability-sns-topic"
+  arn       = "arn:aws:sns:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:observability-sns-topic"
 }

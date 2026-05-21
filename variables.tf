@@ -28,7 +28,7 @@ variable "document_name" {
 }
 
 variable "create_event_bridge_rule" {
-  type = bool
-  default = false
+  type        = bool
+  default     = false
   description = "Create a eventbridge rule specific for this doc runner, for when the normal ssm rule is disabled"
 }

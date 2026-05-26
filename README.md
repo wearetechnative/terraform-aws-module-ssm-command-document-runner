@@ -141,6 +141,18 @@ This is useful when:
 - Coordinating maintenance windows
 - Preventing unwanted execution during Terraform apply
 
+## EventBridge failure notifications
+
+When enabled:
+
+```hcl
+create_event_bridge_rule = true
+```
+
+The module creates an EventBridge rule that listens for failed SSM command invocation status changes for this document and sends matching events to the `observability-sns-topic` SNS topic in the current AWS account and region.
+
+Use this when the default or central SSM notification rule is disabled and this document runner still needs failure alerts. Be aware that enabling this alongside an existing SSM failure notification rule may result in duplicate alerts.
+
 ---
 
 # Targeting Instances
@@ -198,15 +210,20 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [aws_ssm_association.run_reboot_doc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_association) | resource |
-| [aws_ssm_document.reboot_check](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_document) | resource |
+| [aws_cloudwatch_event_rule.run_ssm_doc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_event_rule) | resource |
+| [aws_cloudwatch_event_target.sns](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_event_target) | resource |
+| [aws_ssm_association.run_ssm_doc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_association) | resource |
+| [aws_ssm_document.ssm_doc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_document) | resource |
+| [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
+| [aws_region.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_apply_only_at_cron_interval"></a> [apply\_only\_at\_cron\_interval](#input\_apply\_only\_at\_cron\_interval) | Enable this option if you do not want an association to run immediately after you create or update it. | `bool` | `true` | no |
+| <a name="input_apply_only_at_cron_interval"></a> [apply\_only\_at\_cron\_interval](#input\_apply\_only\_at\_cron\_interval) | Disable this option if you do not want an association to run immediately after you create or update it. | `bool` | `true` | no |
 | <a name="input_content"></a> [content](#input\_content) | script we need to run on the ssm managed ssm instances | `string` | n/a | yes |
+| <a name="input_create_event_bridge_rule"></a> [create\_event\_bridge\_rule](#input\_create\_event\_bridge\_rule) | Create a eventbridge rule specific for this doc runner, for when the normal ssm rule is disabled | `bool` | `false` | no |
 | <a name="input_document_name"></a> [document\_name](#input\_document\_name) | The name you want to give to your ssm document and please make sure that it is descriptive as it will be used in the alerts | `string` | n/a | yes |
 | <a name="input_schedule"></a> [schedule](#input\_schedule) | The timezone of cron expression is UTC | `string` | `"cron(0 10 ? * * *)"` | no |
 | <a name="input_targets"></a> [targets](#input\_targets) | list of instance ids to be checked | `list(string)` | <pre>[<br>  "*"<br>]</pre> | no |

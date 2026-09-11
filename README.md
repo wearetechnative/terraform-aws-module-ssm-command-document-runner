@@ -1,7 +1,7 @@
 # terraform-aws-module-ssm-command-document-runner  
 ![](https://img.shields.io/github/actions/workflow/status/wearetechnative/terraform-aws-module-ssm-command-document-runner/tflint.yaml?branch=main&style=plastic)
-![](https://img.shields.io/github/license/TechNative-B-V/terraform-aws-ssm-command-run?style=plastic)
-![](https://img.shields.io/github/v/release/TechNative-B-V/terraform-aws-ssm-command-run?style=plastic)
+![](https://img.shields.io/github/license/wearetechnative/terraform-aws-module-ssm-command-document-runner?style=plastic)
+![](https://img.shields.io/github/v/release/wearetechnative/terraform-aws-module-ssm-command-document-runner?style=plastic)
 
 <!-- SHIELDS -->
 

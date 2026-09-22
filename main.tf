@@ -24,7 +24,7 @@ resource "aws_ssm_association" "run_ssm_doc" {
 
 resource "aws_cloudwatch_event_rule" "run_ssm_doc" {
   count       = var.create_event_bridge_rule == true ? 1 : 0
-  name        = "ssm-document-runner-notification-rule"
+  name        = "${var.document_name}-rule"
   description = "Capture failed association document runs"
 
   event_pattern = jsonencode({
